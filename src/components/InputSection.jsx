@@ -7,24 +7,19 @@ const InputSection = ({ onRegexChange }) => {
   const [customPattern, setCustomPattern] = useState("");
   const [finalPattern, setFinalPattern] = useState("");
 
-  // Build the regex pattern dynamically based on user input
   useEffect(() => {
-    let pattern = "^"; // Start anchor
+    let pattern = "^"; 
 
-    if (useDigits) pattern += "(?=.*\\d)"; // Include at least one digit
-    if (useLetters) pattern += "(?=.*[a-zA-Z])"; // Include at least one letter (a-z, A-Z)
-    if (useSpecialChars) pattern += "(?=.*[\\W_])"; // Include at least one special character (non-word char)
+    if (useDigits) pattern += "(?=.*\\d)"; 
+    if (useLetters) pattern += "(?=.*[a-zA-Z])"; 
+    if (useSpecialChars) pattern += "(?=.*[\\W_])"; 
 
-    // Add the custom regex part, if provided
     pattern += customPattern;
 
-    // Enforce allowed characters at the end (you can customize this part based on needs)
     pattern += "[a-zA-Z\\d\\W_]*$";
 
-    // Update final pattern
     setFinalPattern(pattern);
 
-    // Notify parent component
     onRegexChange(pattern);
   }, [useDigits, useLetters, useSpecialChars, customPattern, onRegexChange]);
 
@@ -32,7 +27,6 @@ const InputSection = ({ onRegexChange }) => {
     <div className="bg-white shadow-lg rounded-lg p-6 text-black">
       <h2 className="text-xl font-bold mb-4">Build Your Regex</h2>
 
-      {/* Digits checkbox */}
       <label className="block mb-2 ">
         <input
           className="mr-3"
@@ -43,7 +37,6 @@ const InputSection = ({ onRegexChange }) => {
         Include Digits (0-9)
       </label>
 
-      {/* Letters checkbox */}
       <label className="block mb-2">
         <input
           className="mr-3"
@@ -54,7 +47,6 @@ const InputSection = ({ onRegexChange }) => {
         Include Letters (a-z, A-Z)
       </label>
 
-      {/* Special Characters checkbox */}
       <label className="block mb-2">
         <input
           className="mr-3"
@@ -65,7 +57,6 @@ const InputSection = ({ onRegexChange }) => {
         Include Special Characters
       </label>
 
-      {/* Custom Regex Pattern input */}
       <label className="block mb-2">
         <input
           type="text"
@@ -77,7 +68,6 @@ const InputSection = ({ onRegexChange }) => {
         Custom Pattern (optional)
       </label>
 
-      {/* Display the generated pattern */}
       <div className="mt-4">
         <strong>Generated Regex Pattern:</strong>
         <pre className="bg-gray-100 p-2 rounded mt-2">{finalPattern}</pre>
